@@ -137,18 +137,19 @@ const ProductDetail = () => {
     if (!product) return <div>Loading...</div>;
 
     const handleOptionSelect = (groupName, optionName) => {
+        const prevOptions = {...selectedOptions,[groupName]: optionName};
         setSelectedOptions(prevOptions => ({
             ...prevOptions,
             [groupName]: optionName
         }));
+        console.log(prevOptions);
 
-        // Tìm variant phù hợp với các option đã chọn
         const matchingVariant = variants.find(variant =>
             variant.options.every(opt =>
-                selectedOptions[opt.groupName] === opt.name ||
-                (opt.groupName === groupName && opt.name === optionName)
+                    prevOptions[opt.groupName] === opt.name
             )
         );
+
 
         if (matchingVariant) {
             setSelectedVariant(matchingVariant);
@@ -193,7 +194,6 @@ const ProductDetail = () => {
                                       if (matchingVariant) {
                                           setSelectedVariant(matchingVariant);
                                       } else {
-                                          // If no matching variant found, reset to null or default state
                                           setSelectedVariant(null);
                                       }
                                   }
@@ -201,32 +201,37 @@ const ProductDetail = () => {
                           >
                               {images.map((img, index) => (
                                   <SwiperSlide key={index}>
+                                      <div
+                                          className="w-full h-[50vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-black">
+                                          <img
+                                              src={img?.path || default_image}
+                                              alt={`${product.name} - Image ${index + 1}`}
+                                              className="max-w-full max-h-full object-contain"
+                                              onError={(e) => {
+                                                  e.target.onerror = null;
+                                                  e.target.src = default_image;
+                                              }}
+                                          />
+                                      </div>
+                                  </SwiperSlide>
+                              ))}
+                          </Swiper>
+                          <div className="flex justify-center">
+                              <div className="flex mt-4 space-x-2 overflow-x-auto max-w-full">
+                                  {images.map((img, index) => (
                                       <img
+                                          key={index}
                                           src={img?.path || default_image}
-                                          alt={`${product.name} - Image ${index + 1}`}
-                                          className="w-[30vw] h-[70vh] object-contain mx-auto rounded-lg"
+                                          alt={`Thumbnail ${index + 1}`}
+                                          className={`w-20 h-20 object-cover rounded cursor-pointer ${selectedImage === index ? 'border-2 border-blue-500' : ''}`}
+                                          onClick={() => setSelectedImage(index)}
                                           onError={(e) => {
                                               e.target.onerror = null; // Prevents looping
                                               e.target.src = default_image;
                                           }}
                                       />
-                                  </SwiperSlide>
-                              ))}
-                          </Swiper>
-                          <div className="flex mt-4 space-x-2 overflow-x-auto">
-                              {images.map((img, index) => (
-                                  <img
-                                      key={index}
-                                      src={img?.path || default_image}
-                                      alt={`Thumbnail ${index + 1}`}
-                                      className={`w-20 h-20 object-cover rounded cursor-pointer ${selectedImage === index ? 'border-2 border-blue-500' : ''}`}
-                                      onClick={() => setSelectedImage(index)}
-                                      onError={(e) => {
-                                          e.target.onerror = null; // Prevents looping
-                                          e.target.src = default_image;
-                                      }}
-                                  />
-                              ))}
+                                  ))}
+                              </div>
                           </div>
                       </div>
                       <div>
@@ -234,7 +239,7 @@ const ProductDetail = () => {
                           <p className="text-gray-600 mb-4">{product.description}</p>
                           <div className="flex items-center mb-4">
                               <span className="text-2xl font-bold text-blue-600 mr-2">
-                                    ${selectedVariant?.price || `${product.minPrice} - ${product.maxPrice}`}
+                                    {selectedVariant?.price || `${product.minPrice || 0} - ${product.maxPrice || 0}`} VND
                               </span>
                           </div>
                           <span className="text-sm text-gray-500">Đã bán: {product.sold}</span>
@@ -303,13 +308,13 @@ const ProductDetail = () => {
                       <h2 className="text-2xl font-bold mb-4">Đánh giá sản phẩm</h2>
                       <div className="mb-6">
                           <form onSubmit={handleSubmitComment}>
-            <textarea
-                className="w-full p-2 border rounded-md"
-                rows="3"
-                placeholder="Viết đánh giá của bạn..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-            ></textarea>
+                            <textarea
+                                className="w-full p-2 border rounded-md"
+                                rows="3"
+                                placeholder="Viết đánh giá của bạn..."
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                            ></textarea>
                               <button
                                   type="submit"
                                   className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
@@ -348,16 +353,16 @@ const ProductDetail = () => {
                           pagination={{clickable: true}}
                       >
                           {relatedProducts.map((item) => (
-                              <SwiperSlide key={item.id}>
-                                  <div className="bg-white rounded-lg shadow-md p-4">
-                                          <img
-                                            src={item.image && item.image.length > 0 ? item.image[0].path : '/path/to/default-image.jpg'}
-                                            alt={item.name || 'Product Image'}
-                                            className="w-full h-48 object-cover rounded-md mb-4"
-                                          />
+                              <SwiperSlide key={item.id} className="pb-12"> {/* Added padding-bottom */}
+                                  <div className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col"> {/* Added h-full and flex flex-col */}
+                                      <img
+                                          src={item.image && item.image.length > 0 ? item.image[0].path : '/path/to/default-image.jpg'}
+                                          alt={item.name || 'Product Image'}
+                                          className="w-full h-48 object-cover rounded-md mb-4"
+                                      />
                                       <h3 className="text-lg font-semibold mb-2 truncate">{item.name}</h3>
-                                      <p className="text-sm text-gray-600 mb-2 line-clamp-2">{item.description}</p>
-                                      <div className="flex justify-between items-center">
+                                      <p className="text-sm text-gray-600 mb-2 line-clamp-2 flex-grow">{item.description}</p> {/* Added flex-grow */}
+                                      <div className="flex justify-between items-center mt-auto"> {/* Added mt-auto */}
                                           <span className="font-bold text-blue-600">${item.minPrice}</span>
                                           <button
                                               className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-700 transition-colors">

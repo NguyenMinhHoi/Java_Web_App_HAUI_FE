@@ -32,7 +32,7 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
             }
         };
         fetchVariants();
-    }, [product.id, axiosSupport]);
+    }, [product.id, axiosSupport, variants]);
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -104,7 +104,6 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
     };
 
     const [groupOptions,setGroupOptions] = useState(product?.groupOptions || []);
-    console.log(groupOptions)
 
     const saveGroupOption = () => {
 
@@ -118,7 +117,6 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
             // Nếu chưa tồn tại, thêm mới
             updatedGroupOptions = [...groupOptions, newGroupOption];
         }
-        console.log(updatedGroupOptions)
         setIsAddingGroupOption(false);
         setNewGroupOption({ name: '', options: [''] });
         setGroupOptions(updatedGroupOptions);
