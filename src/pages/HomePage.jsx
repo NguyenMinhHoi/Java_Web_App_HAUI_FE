@@ -21,6 +21,8 @@ import {Swiper,SwiperSlide} from "swiper/react";
 import {Pagination, Navigation} from "swiper/modules";
 import {FiArrowDown, FiArrowUp} from "react-icons/fi";
 import useAxiosSupport from "../hooks/useAxiosSupport";
+import HomeHeader from "../components/HomeHeader";
+import HomeFooter from "../components/HomeFooter";
 export default function HomePage() {
   const axiosSupport = useAxiosSupport();
 
@@ -133,38 +135,7 @@ export default function HomePage() {
 
   return (
       <div className="flex flex-col min-h-screen bg-gray-100">
-        <header className="bg-[#0b328f] text-white sticky top-0 z-50 shadow-md">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <a href="/public" className="flex items-center space-x-2">
-                <span className="text-lg sm:text-2xl">HTQ eCommerce</span>
-              </a>
-              <nav className="hidden md:block">
-                <ul className="flex space-x-4 lg:space-x-6">
-                  <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Trang chủ</a>
-                  </li>
-                  <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Danh mục</a>
-                  </li>
-                  <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">BestSeller</a>
-                  </li>
-                  <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Dịch vụ</a>
-                  </li>
-                  <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Giới thiệu</a>
-                  </li>
-                  <li>
-                    <Link to="/login"
-                          className="border-2 border-[#ffce46] bg-[#f2a429] hover:bg-[#ffce46] hover:text-white transition-colors text-sm lg:text-base rounded-full px-4 py-2">
-                      Đăng Nhập
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-              <button className="md:hidden bg-transparent border-none text-white">
-                <FaBars className="h-6 w-6"/>
-              </button>
-            </div>
-        </div>
-      </header>
+        <HomeHeader />
 
       <main className="flex-grow">
         <div className="bg-cover bg-center py-16 sm:py-24 md:py-32 relative" id="banner-section"
@@ -513,65 +484,7 @@ export default function HomePage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#0b328f] text-white py-6">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-
-            {/* Thông tin liên hệ */}
-            <div className="space-y-2">
-              <p className="font-semibold text-lg">Bản quyền thuộc về Thư viện Trường Đại học Thành Đô</p>
-              <p>Địa chỉ: Kim Chung, Hoài Đức, Hà Nội, Việt Nam</p>
-              <p>Email: lib@thanhdo.edu.vn</p>
-              <p>Điện thoại: (84-24)33861016</p>
-              <p>Hotline: 0936.146838</p>
-              <p>IP Address: 59.153.238.8</p>
-              <div className="flex justify-center md:justify-start space-x-4 mt-3">
-                <a href="#" className="text-white hover:text-gray-300">
-                  <FaFacebookF className="fa-lg" />
-                </a>
-                <a href="#" className="text-white hover:text-gray-300">
-                  <FaYoutube className="fa-lg" />
-                </a>
-                <a href="#" className="text-white hover:text-gray-300">
-                  <FaGoogle className="fa-lg" />
-                </a>
-                <a href="#" className="text-white hover:text-gray-300">
-                  <i className="fab fa-zalo fa-lg"></i>
-                </a>
-              </div>
-            </div>
-
-            {/* Bản đồ Google */}
-            <div className="flex justify-center">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5109.788412740747!2d105.71876907641048!3d21.062219980595497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3134544dba522d4b%3A0x5db1a51aaf3dd805!2zxJDhuqFpIEjhu41jIFRow6BuaCDEkMO0IC0gUXXhu5FjIEzhu5kgMzI!5e1!3m2!1svi!2sus!4v1727497587612!5m2!1svi!2sus"
-                width="250"
-                height="200"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy">
-              </iframe>
-            </div>
-
-            {/* Thông tin dữ liệu */}
-            <div className="space-y-2">
-              <ul>
-                <li><strong>Hôm nay:</strong> 28 Tháng Chín 2024</li>
-                <li><strong>Người dùng online:</strong> 1062</li>
-                <li><strong>Ngày hôm nay:</strong> 93299</li>
-                <li><strong>Tuần qua:</strong> 980335</li>
-                <li><strong>Tháng này:</strong> 6695651</li>
-                <li><strong>Tổng lượt truy cập:</strong> 80241167</li>
-              </ul>
-            </div>
-
-          </div>
-
-          {/* Copyright */}
-          <div className="text-center mt-8">
-            <p className="text-sm md:text-base">&copy; {new Date().getFullYear()} Thư viện Thành Đô. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <HomeFooter />
     </div>
   );
 }

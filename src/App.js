@@ -15,6 +15,7 @@ import userReducer from "./redux/reducers/userReducer";
 import merchantReducer from "./redux/reducers/merchantReducer";
 import {persistor, store} from "./redux/store";
 import ProductDetail from "./components/ProductDetail";
+import Cart from "./components/Cart";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                       <Route path='/login' element={<Login />} />
                       <Route path='/register' element={<Register />} />
                       <Route path='/merchant/register' element={<CreateMerchantForm />} />
+                      <Route path='/cart' element={<Cart />} />
                       {/* client */}
                       <Route
                           path='/client/*'

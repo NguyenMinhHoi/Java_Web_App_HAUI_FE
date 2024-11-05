@@ -18,7 +18,6 @@ const ProtectedRoute = ({children, allowedRoles}) => {
                     if (role[i].authority === 'ROLE_MERCHANT') {
                         try {
                             const response = await axiosSupport.getMerchantByUserId(id);
-                            console.log("data merhcant",response)
                             dispatch(setMerchant({
                                 ...response,
                                 id: response.id // Explicitly include the id
@@ -37,6 +36,9 @@ const ProtectedRoute = ({children, allowedRoles}) => {
     for (let i = 0; i < role.length; i++) {
         if (allowedRoles.includes(role[i].authority)) {
             if (role[i].authority === 'ROLE_MERCHANT') {
+                check = true;
+                break;
+            }else if(role[i].authority === 'ROLE_USER') {
                 check = true;
                 break;
             }

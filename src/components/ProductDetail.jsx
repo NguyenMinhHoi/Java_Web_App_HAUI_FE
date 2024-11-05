@@ -21,6 +21,7 @@ import {FiArrowDown, FiArrowUp} from "react-icons/fi";
 import HomeHeader from "./HomeHeader";
 import HomeFooter from "./HomeFooter";
 import default_image from '../assets/images/default-image.svg';
+import VariantSelect from "./VariantSelect";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -265,27 +266,11 @@ const ProductDetail = () => {
                               <p className="text-sm text-gray-600 mb-1">Danh mục: {product.category.name}</p>
                               {/* Add more product details here */}
                           </div>
-                          <div className="my-6 border-t border-b py-4">
-                              <h3 className="text-lg font-semibold mb-3">Chọn phân loại:</h3>
-                              {product.groupOptions.map((groupOption, groupIndex) => (
-                                  <div key={`group-${groupIndex}`} className="mb-4">
-                                      <h4 className="text-md font-medium mb-2">{groupOption.name}:</h4>
-                                      <div className="flex flex-wrap gap-2">
-                                          {groupOption.options.map((option, optionIndex) => (
-                                              <button
-                                                  key={`option-${groupIndex}-${optionIndex}`}
-                                                  className={`px-4 py-2 border rounded-full hover:border-blue-500 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                                                      selectedOptions[groupOption.name] === option.name ? 'bg-blue-500 text-white' : ''
-                                                  }`}
-                                                  onClick={() => handleOptionSelect(groupOption.name, option.name)}
-                                              >
-                                                  {option.name}
-                                              </button>
-                                          ))}
-                                      </div>
-                                  </div>
-                              ))}
-                          </div>
+                          <VariantSelect
+                              groupOptions={product.groupOptions}
+                              selectedOptions={selectedOptions}
+                              handleOptionSelect={handleOptionSelect}
+                          />
                           <div className="flex space-x-4 mb-6">
                               <button
                                   onClick={handleAddToCart}

@@ -1,8 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa';
+import {Link, useNavigate} from 'react-router-dom';
+import {FaBars, FaShoppingCart} from 'react-icons/fa';
 
 const HomeHeader = () => {
+    const navigate = useNavigate();
+
+    const handleCartClick = () => {
+        navigate('/cart');
+    };
     return (
         <header className="bg-[#0b328f] text-white sticky top-0 z-50 shadow-md">
             <div className="container mx-auto px-4 py-4">
@@ -22,9 +27,18 @@ const HomeHeader = () => {
                                     Đăng Nhập
                                 </Link>
                             </li>
+                            <li>
+                                <button onClick={handleCartClick}
+                                        className="text-white hover:text-[#f2a429] transition-colors">
+                                    <FaShoppingCart className="h-6 w-6"/>
+                                </button>
+                            </li>
                         </ul>
                     </nav>
                     <button className="md:hidden bg-transparent border-none text-white">
+                        <button onClick={handleCartClick} className="text-white hover:text-[#f2a429] transition-colors">
+                            <FaShoppingCart className="h-6 w-6"/>
+                        </button>
                         <FaBars className="h-6 w-6"/>
                     </button>
                 </div>

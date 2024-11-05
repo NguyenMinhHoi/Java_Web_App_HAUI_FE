@@ -57,6 +57,9 @@ const AddProductForm = ({ onSubmit, categories, merchants,setIsModalOpen, mercha
         return {
             name: product.name,
             description: product.description,
+            category: {
+                id: product.category,
+            },
             merchant: {
                 id: id
             },
