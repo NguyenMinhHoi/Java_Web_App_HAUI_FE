@@ -155,6 +155,16 @@ class AxiosSupport {
         },id);
     }
 
+    async updateCart(variantId,userId) {
+        return this.fetchWithAuth('updateCart', {
+            method: 'PUT',
+            body: JSON.stringify({
+                "variantId": variantId,
+                "userId": userId
+            })
+        });
+    }
+
 
 }
 

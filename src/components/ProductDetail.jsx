@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {
     FaStar,
     FaShoppingCart,
@@ -22,10 +22,12 @@ import HomeHeader from "./HomeHeader";
 import HomeFooter from "./HomeFooter";
 import default_image from '../assets/images/default-image.svg';
 import VariantSelect from "./VariantSelect";
+import {useSelector} from "react-redux";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const axiosSupport = useAxiosSupport();
+  const {id : userId} = useSelector(state => state.user);
   const swiperRef = useRef(null);
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -36,6 +38,13 @@ const ProductDetail = () => {
   const [images,setImages] = useState([]);
   const [groupOptions, setGroupOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const navigate = useNavigate();
+    const handleProductClick = (item) => {
+        navigate(`/product/${item.id}`);
+    };
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
 
     useEffect(() => {
         if(selectedOptions.length === groupOptions.length) {
@@ -107,8 +116,13 @@ const ProductDetail = () => {
         }
     }, [selectedImage, images, variants])
 
-    const handleAddToCart = () => {
-    // Implement add to cart functionality
+    const handleAddToCart = async () => {
+        if(variants.length > 1 && selectedVariant) {
+            await axiosSupport.updateCart(selectedVariant.id, userId);
+        }else{
+            await axiosSupport.updateCart(variants[0].id, userId);
+        }
+
     console.log("Added to cart:", product.name);
   };
 
@@ -271,7 +285,7 @@ const ProductDetail = () => {
                               selectedOptions={selectedOptions}
                               handleOptionSelect={handleOptionSelect}
                           />
-                          <div className="flex space-x-4 mb-6">
+                          <div className="flex space-x-4 mb-6 mt-2">
                               <button
                                   onClick={handleAddToCart}
                                   className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition-colors flex items-center justify-center"
@@ -339,11 +353,12 @@ const ProductDetail = () => {
                       >
                           {relatedProducts.map((item) => (
                               <SwiperSlide key={item.id} className="pb-12"> {/* Added padding-bottom */}
-                                  <div className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col"> {/* Added h-full and flex flex-col */}
+                                  <div className="bg-white rounded-lg shadow-md p-4 h-full flex flex-col" onClick={()=>handleProductClick(item)}> {/* Added h-full and flex flex-col */}
                                       <img
                                           src={item.image && item.image.length > 0 ? item.image[0].path : '/path/to/default-image.jpg'}
                                           alt={item.name || 'Product Image'}
-                                          className="w-full h-48 object-cover rounded-md mb-4"
+                                          className="w-full h-48 object-cover rounded-md mb-4 hover:scale-105 transition-transform transform cursor-pointer"
+                                          onClick={()=>handleProductClick(item)}
                                       />
                                       <h3 className="text-lg font-semibold mb-2 truncate">{item.name}</h3>
                                       <p className="text-sm text-gray-600 mb-2 line-clamp-2 flex-grow">{item.description}</p> {/* Added flex-grow */}
