@@ -12,6 +12,8 @@ const urlManager = {
       getAllProducts: "/products",
       getDetailProduct: (id)=> `/products/${id}/details`,
       updateCart: "/cart",
+      getUserById: (id)=> `/users/${id}`,
+      getCartByUserId:(id)=> `/cart/user/${id}`,
 };
 
 export default urlManager;

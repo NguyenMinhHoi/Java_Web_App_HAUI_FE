@@ -4,7 +4,7 @@ import ClientSidebar from './ClientSidebar';
 import ClientHeader from './ClientHeader';
 import BookSection from './BookSection';
 import demoBookCover from '../../assets/images/demoBook.png';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../redux/reducers/userReducer";
 import {Swiper, SwiperSlide} from "swiper/react";
 import useAxiosSupport from "../../hooks/useAxiosSupport";
@@ -12,7 +12,10 @@ import {Navigation, Pagination} from "swiper/modules";
 
 export default function ClientPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+
+  const {id} = useSelector(state => state.user);
+
+  const [currentUser, setCurrentUser] = useState(id);
   const navigate = useNavigate();
     const axiosSupport = useAxiosSupport();
 

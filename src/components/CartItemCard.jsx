@@ -15,24 +15,28 @@ const CartItemCard = ({ item, onQuantityChange, onRemove, onVariantChange }) => 
         <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
                 <img
-                    src={`/path-to-image/${item.id}.jpg`}
+                    src={item.image?.path || '/images/default-product-image.jpg'}
                     alt={item.name}
                     className="w-20 h-20 object-cover rounded-md"
                 />
                 <div>
                     <h3 className="font-medium text-lg">{item.name}</h3>
                     <p className="text-blue-600 font-semibold mt-1">
-                        {item.price.toLocaleString('vi-VN')} đ
+                        {item.price} VND
                     </p>
                 </div>
             </div>
             <div className="flex items-center space-x-4">
                 <div>
                     <button
-                        onClick={toggleVariantSelect}
+                        onClick={item.options.length === 1 && item.options[0].name !== 'DEFAULT' && toggleVariantSelect}
                         className="text-gray-600 text-sm flex items-center hover:text-blue-500 focus:outline-none"
                     >
-                        {item.variant} <FiChevronDown className="ml-1"/>
+                        {
+                            item.options.map((option, index) => (
+                            index == 0 ? <span>{option.name}</span> : <span>, {option.name}</span>
+                        ))}
+                          <FiChevronDown className="ml-1"/>
                     </button>
                 </div>
             </div>
@@ -64,8 +68,7 @@ const CartItemCard = ({ item, onQuantityChange, onRemove, onVariantChange }) => 
             <Modal isOpen={showVariantSelect} onClose={toggleVariantSelect}>
                 <div className="mt-4">
                     <VariantSelect
-                        groupOptions={item.groupOptions}
-                        selectedOptions={item.selectedOptions}
+                        // productId={item.product.id}
                         handleOptionSelect={(groupName, optionName) => {
                             onVariantChange(item.id, groupName, optionName);
                             toggleVariantSelect();

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {FaBars, FaShoppingCart} from 'react-icons/fa';
+import {useSelector} from "react-redux";
 
 const HomeHeader = () => {
     const navigate = useNavigate();

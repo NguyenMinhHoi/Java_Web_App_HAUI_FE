@@ -23,6 +23,7 @@ import HomeFooter from "./HomeFooter";
 import default_image from '../assets/images/default-image.svg';
 import VariantSelect from "./VariantSelect";
 import {useSelector} from "react-redux";
+import ClientHeader from "../pages/clientPage/ClientHeader";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -38,7 +39,9 @@ const ProductDetail = () => {
   const [images,setImages] = useState([]);
   const [groupOptions, setGroupOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const navigate = useNavigate();
+    const [selectedVariant, setSelectedVariant] = useState(null);
+
+    const navigate = useNavigate();
     const handleProductClick = (item) => {
         navigate(`/product/${item.id}`);
     };
@@ -79,8 +82,8 @@ const ProductDetail = () => {
                     });
                 }
 
-                if(res.groupOptions) {
-                    setGroupOptions(res.groupOptions);
+                if(res.product.groupOptions) {
+                    setGroupOptions(res.product.groupOptions);
                 }
 
                 setImages(allImages);
@@ -144,7 +147,6 @@ const ProductDetail = () => {
     // }
   };
 
-    const [selectedVariant, setSelectedVariant] = useState(null);
 
 
 
@@ -181,7 +183,7 @@ const ProductDetail = () => {
 
   return (
       <div className="flex flex-col min-h-screen bg-gray-100">
-          <HomeHeader/>
+          {userId ? <ClientHeader currentUser={userId}/> :<HomeHeader/>}
 
           <main className="flex-grow mt-5">
               <div className="container mx-auto px-4 py-8">

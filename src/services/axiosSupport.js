@@ -165,6 +165,17 @@ class AxiosSupport {
         });
     }
 
+    async getUserById(userId) {
+        return this.fetchWithAuth('getUserById', {
+            method: 'GET'
+        },userId);
+    }
+
+    async getCartByUserId(userId) {
+        return this.fetchWithAuth('getCartByUserId', {
+            method: 'GET'
+        },userId);
+    }
 
 }
 

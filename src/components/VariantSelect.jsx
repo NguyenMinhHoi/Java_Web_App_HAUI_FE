@@ -2,7 +2,7 @@ import React from 'react';
 
 const VariantSelect = ({ groupOptions, selectedOptions, handleOptionSelect }) => {
     return (
-        groupOptions.length > 0 && (
+        groupOptions?.length > 0 && (
                 <div className="my-6 border-t border-b py-4">
                     <h3 className="text-lg font-semibold mb-3">Chọn phân loại:</h3>
                     {groupOptions.map((groupOption, groupIndex) => (
