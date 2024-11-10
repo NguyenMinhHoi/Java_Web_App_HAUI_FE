@@ -71,7 +71,6 @@ const Cart = () => {
                               item={item}
                               onQuantityChange={handleQuantityChange}
                               onRemove={handleRemoveItem}
-                              // onVariantChange={handleQuantityChange}
                           />
                       ))}
                   </div>
