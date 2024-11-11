@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,6 +14,7 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = React.useState(false);
+    const user = useSelector(state => state.user);
 
     const formik = useFormik({
         initialValues: {
@@ -40,12 +41,18 @@ function Login() {
                 if (response.status === 200) {
                     const data = await response.json();
                     dispatch(setAuthenticate(data.accessToken, data.roles,data.id));
-
-                    toast.success('Đăng nhập thành công!');
-                    if (data.roles.some(role => role.authority === 'ROLE_ADMIN' || data.roles.some(role => role.authority === 'ROLE_MERCHANT' ))) {
-                        navigate('/dashboard/');
-                    } else {
-                        navigate('/client');
+                    if(user?.authenticate) {
+                        const user = await axiosSupport.getUserDetail(data.id);
+                        if(response.status === 200)
+                            dispatch(loginSuccess(user));
+                        else
+                            toast.error('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');
+                        toast.success('Đăng nhập thành công!');
+                        if (data.roles.some(role => role.authority === 'ROLE_ADMIN' || data.roles.some(role => role.authority === 'ROLE_MERCHANT' ))) {
+                            navigate('/dashboard/');
+                        } else {
+                            navigate('/client');
+                        }
                     }
                 } else {
                     toast.error('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');

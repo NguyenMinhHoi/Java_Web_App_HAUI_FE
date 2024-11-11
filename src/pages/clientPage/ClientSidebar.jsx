@@ -40,7 +40,6 @@ export default function ClientSidebar({ isOpen, onClose }) {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex justify-between items-center p-4">
-          <img src={ThanhDoBlueLogo} alt="Thư viện Thành Đô Logo" className="h-8" />
           <button onClick={onClose}>
             <FiX className="h-6 w-6" />
           </button>

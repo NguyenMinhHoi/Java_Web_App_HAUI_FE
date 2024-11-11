@@ -8,7 +8,6 @@ export default function ClientHeader({ currentUser, onLogout, onMenuClick }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('Sách');
   const [user,setCurrentUser] = useState(null);
   const userMenuRef = useRef(null);
   const axiosSupport = useAxiosSupport();
@@ -41,27 +40,22 @@ export default function ClientHeader({ currentUser, onLogout, onMenuClick }) {
     setIsUserMenuOpen(!isUserMenuOpen);
   };
 
-  const tabs = ['Sách', 'Giáo trình', 'Nghiên cứu'];
-
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-30">
       <div className="flex items-center">
         <button onClick={onMenuClick} className="mr-4">
           <FiMenu className="h-6 w-6" />
         </button>
-        <Link to="/home" className="text-xl font-semibold text-gray-900 mr-8">HTQ eCommerce</Link>
+        <Link to="/client" className="text-xl font-semibold text-gray-900 mr-8">HTQ eCommerce</Link>
         <div className="flex space-x-4">
-          {tabs.map(tab => (
-            <button
-              key={tab}
-              className={`px-4 py-2 rounded-full text-sm font-medium ${
-                activeTab === tab ? 'bg-gray-200' : 'text-gray-600 hover:text-black'
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
+          <nav className="hidden md:block">
+            <ul className="flex space-x-4 lg:space-x-6">
+              <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Danh mục</a></li>
+              <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">BestSeller</a>
+              </li><li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Dịch vụ</a></li>
+              <li><a href="#" className="hover:text-[#f2a429] transition-colors text-sm lg:text-base">Giới thiệu</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
       <div className="flex items-center space-x-4">

@@ -11,9 +11,9 @@ const AddressRow = ({ address, district, province, ward , setFieldValue}) => {
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedWard, setSelectedWard] = useState('');
     const [detailedAddress, setDetailedAddress] = useState(address || '');
+    console.log("address:", address, "district:", district, "province:", province, "ward:", ward);
 
     useEffect(() => {
-        // Gọi addressSelector khi component mount
         addressSelector();
     }, []);
 
@@ -48,37 +48,37 @@ const AddressRow = ({ address, district, province, ward , setFieldValue}) => {
 
     return (
         <div className="space-y-4">
-            <div className="flex space-x-4">
+            <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                 <select
                     value={selectedProvince}
                     onChange={handleProvinceChange}
-                    className="w-1/3 p-2 border rounded"
+                    className="w-full md:w-1/3 p-2 border rounded"
                 >
                     <option value="">Tỉnh/Thành phố</option>
                     {provinces.map(province => (
                         <option key={province.Id} value={province.Id}>{province.Name}</option>
                     ))}
                 </select>
-
+        
                 <select
                     value={selectedDistrict}
                     onChange={handleDistrictChange}
-                    className="w-1/3 p-2 border rounded"
+                    className="w-full md:w-1/3 p-2 border rounded"
                 >
                     <option value="">Quận/Huyện</option>
                     {districts.map(district => (
                         <option key={district.Id} value={district.Id}>{district.Name}</option>
                     ))}
                 </select>
-
+        
                 <select
                     value={selectedWard}
                     onChange={(e) => {
                         setSelectedWard(e.target.value)
-                        ward = e.target.options[e.target.selectedIndex].text; // Sử dụng tên phường/xã thay vì ID
-                        setFieldValue('ward', ward); // Cập nhật giá trị của trường ward trong form
+                        ward = e.target.options[e.target.selectedIndex].text;
+                        setFieldValue('ward', ward);
                     }}
-                    className="w-1/3 p-2 border rounded"
+                    className="w-full md:w-1/3 p-2 border rounded"
                 >
                     <option value="">Phường/Xã</option>
                     {wards.map(ward => (
@@ -86,18 +86,20 @@ const AddressRow = ({ address, district, province, ward , setFieldValue}) => {
                     ))}
                 </select>
             </div>
-
-
+        
             <div>
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700">Địa chỉ chi tiết</label>
                 <div className="mt-1 flex rounded-md shadow-sm">
-                                    <span
-                                        className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                                        <FaMapMarkerAlt className="h-5 w-5"/>
-                                    </span>
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                        <FaMapMarkerAlt className="h-5 w-5"/>
+                    </span>
                     <Field
                         name="address"
                         type="text"
+                        onChange={(e) => {
+                            setDetailedAddress(e.target.value)
+                            setFieldValue('address', detailedAddress);
+                        }}
                         className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300"
                     />
                 </div>

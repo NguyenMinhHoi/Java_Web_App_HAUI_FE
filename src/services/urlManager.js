@@ -14,6 +14,12 @@ const urlManager = {
       updateCart: "/cart",
       getUserById: (id)=> `/users/${id}`,
       getCartByUserId:(id)=> `/cart/user/${id}`,
+      updateVariantCard: (params)=> `/cart/re-variant/${params.userId}/${params.variantCurrent}/${params.variantNew}`,
+      createReview: "/reviews",
+      getReviewsByProductId: (id)=> `/reviews/product/${id}`,
+      getUserDetail: (id)=> `/users/${id}`,
+      saveUserAddress: (userId)=> `/addresses/user/${userId}`,
+      createOrder: "/orders",
 };
 
 export default urlManager;

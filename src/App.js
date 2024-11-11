@@ -16,6 +16,7 @@ import merchantReducer from "./redux/reducers/merchantReducer";
 import {persistor, store} from "./redux/store";
 import ProductDetail from "./components/ProductDetail";
 import Cart from "./components/Cart";
+import PaymentPage from "./pages/PaymentPage";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
                                </ProtectedRoute>
                           }
                       />
+                      <Route path='/payment' element={<PaymentPage/>}></Route>
                       {/* admin */}
                       <Route
                           path='/dashboard/*'

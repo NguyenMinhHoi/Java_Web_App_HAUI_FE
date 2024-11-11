@@ -14,6 +14,7 @@ const LOGIN_REQUEST = 'LOGIN_REQUEST';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
+const ADDRESS = 'ADDRESS';
 
 // Reducer
 const userReducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...initialState
       };
+    case ADDRESS:
+      return {
+          ...state,
+          user: {...state.user, addresses: [...action.payload] },
+      }
       case 'SET_AUTHENTICATE':
         return {
           ...state ,
@@ -80,4 +86,9 @@ export const logout = () => ({
 export const setAuthenticate = (token, role,id) => ({
   type: 'SET_AUTHENTICATE',
   payload: { token, role , id}
+});
+
+export const setAddressUser = (address) => ({
+  type: ADDRESS,
+  payload: address
 });

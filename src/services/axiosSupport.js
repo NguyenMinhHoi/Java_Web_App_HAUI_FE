@@ -177,6 +177,56 @@ class AxiosSupport {
         },userId);
     }
 
+    async updateVariantCart(userId, variantCurrent, variantNew) {
+        return this.fetchWithAuth('updateVariantCard', {
+            method: 'PUT'
+        },{
+            userId: userId,
+            variantCurrent: variantCurrent,
+            variantNew: variantNew
+        });
+    }
+
+    async getReviewsByProductId(productId) {
+        return this.fetchWithAuth('getReviewsByProductId', {
+            method: 'GET'
+        },productId);
+    }
+
+    async createReview(review) {
+        return this.fetchWithAuth('createReview', {
+            method: 'POST',
+            body: JSON.stringify(review)
+        });
+    }
+
+    async getUserDetail(id) {
+        return this.fetchWithAuth('getUserDetail', {
+            method: 'GET'
+        },id);
+    }
+
+    async saveUserAddress(address,id) {
+        const data = {
+            detail: address.address,
+            ward: address.ward,
+            province: address.province,
+            district: address.district,
+            isDefault: true,
+        }
+        return this.fetchWithAuth('saveUserAddress', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        },id);
+    }
+
+    async createOrder(order) {
+        return this.fetchWithAuth('createOrder', {
+            method: 'POST',
+            body: JSON.stringify(order)
+        });
+    }
+
 }
 
 export default AxiosSupport;

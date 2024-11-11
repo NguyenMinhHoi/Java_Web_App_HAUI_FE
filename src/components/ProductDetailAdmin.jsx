@@ -13,6 +13,8 @@ import {
 import useAxiosSupport from "../hooks/useAxiosSupport";
 import { useTransition, animated } from 'react-spring';
 import Modal from "./Modal";
+import default_image from '../assets/images/default-image.svg';
+
 
 const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
     const axiosSupport = useAxiosSupport();
@@ -32,7 +34,7 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
             }
         };
         fetchVariants();
-    }, [product.id, axiosSupport, variants]);
+    }, []);
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -402,7 +404,7 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
                                                 Giá
                                             </th>
                                             <th className="px-2 md:px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Tồn kho
+                                                Đã bán
                                             </th>
                                         </tr>
                                         </thead>
@@ -449,7 +451,7 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
                                                                 </div>
                                                             ) : (
                                                                 <img
-                                                                    src={variant.image ? variant.image.path : 'default-variant-image.jpg'}
+                                                                    src={variant.image ? variant.image.path : default_image}
                                                                     alt={`Variant ${index + 1}`}
                                                                     className="w-12 h-12 object-cover rounded-md"
                                                                 />
@@ -457,18 +459,18 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
                                                         </div>
                                                     </td>
                                                     <td className="px-2 md:px-4 py-4 whitespace-nowrap">
-                                                        <div className="text-xs md:text-sm text-gray-900">
+                                                        <div className="flex items-center justify-center text-xs md:text-sm text-gray-900">
                                                             {variant.options.map(option => option.name).join(', ')}
                                                         </div>
                                                     </td>
                                                     <td className="px-2 md:px-4 py-4 whitespace-nowrap">
-                                                        <div className="text-xs md:text-sm text-gray-900">
+                                                        <div className="flex items-center justify-center text-xs md:text-sm text-gray-900">
                                                             {isEditing ? (
                                                                 <input
                                                                     type="number"
                                                                     value={variant.quantity || ""}
                                                                     onChange={(e) => handleVariantChange(index, 'quantity', e.target.value)}
-                                                                    className="w-full p-1 border rounded"
+                                                                    className="w-full p-1 border rounded text-center"
                                                                 />
                                                             ) : (
                                                                 variant.quantity || ""
@@ -476,13 +478,13 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
                                                         </div>
                                                     </td>
                                                     <td className="px-2 md:px-4 py-4 whitespace-nowrap">
-                                                        <div className="text-xs md:text-sm text-gray-900">
+                                                        <div className="flex items-center justify-center text-xs md:text-sm text-gray-900">
                                                             {isEditing ? (
                                                                 <input
                                                                     type="number"
                                                                     value={variant.price || ""}
                                                                     onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
-                                                                    className="w-full p-1 border rounded"
+                                                                    className="w-full p-1 border rounded text-center"
                                                                 />
                                                             ) : (
                                                                 variant.price && variant.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
@@ -490,13 +492,13 @@ const ProductDetailAdmin = ({ product, onEdit, onDelete }) => {
                                                         </div>
                                                     </td>
                                                     <td className="px-2 md:px-4 py-4 whitespace-nowrap">
-                                                        <div className="text-xs md:text-sm text-gray-900">
+                                                        <div className="flex items-center justify-center text-xs md:text-sm text-gray-900">
                                                             {isEditing ? (
                                                                 <input
                                                                     type="number"
                                                                     value={variant.stock || ""}
                                                                     onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
-                                                                    className="w-full p-1 border rounded"
+                                                                    className="w-full p-1 border rounded text-center"
                                                                 />
                                                             ) : (
                                                                 variant.stock || ""
