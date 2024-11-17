@@ -41,18 +41,19 @@ function Login() {
                 if (response.status === 200) {
                     const data = await response.json();
                     dispatch(setAuthenticate(data.accessToken, data.roles,data.id));
-                    if(user?.authenticate) {
+                    if(user?.authenticate && data.roles.some(role => role.authority === 'ROLE_USER')) {
                         const user = await axiosSupport.getUserDetail(data.id);
                         if(response.status === 200)
                             dispatch(loginSuccess(user));
                         else
                             toast.error('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');
                         toast.success('Đăng nhập thành công!');
-                        if (data.roles.some(role => role.authority === 'ROLE_ADMIN' || data.roles.some(role => role.authority === 'ROLE_MERCHANT' ))) {
-                            navigate('/dashboard/');
-                        } else {
-                            navigate('/client');
-                        }
+
+                    }
+                    if (data.roles.some(role => role.authority === 'ROLE_ADMIN' || data.roles.some(role => role.authority === 'ROLE_MERCHANT' ))) {
+                        navigate('/dashboard/');
+                    } else {
+                        navigate('/client');
                     }
                 } else {
                     toast.error('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');

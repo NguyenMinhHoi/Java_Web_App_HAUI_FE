@@ -304,7 +304,7 @@ const ProductDetail = () => {
                                     ))}
                                 </div>
                                 <span
-                                    className="text-sm text-gray-600">{Number(product?.rating || 0).toFixed(2)} ({product.sold} đánh giá)</span>
+                                    className="text-sm text-gray-600">{Number(product?.rating || 0).toFixed(2)} ({comments.length} đánh giá)</span>
                             </div>
                             {product.isDiscount && (
                                 <span

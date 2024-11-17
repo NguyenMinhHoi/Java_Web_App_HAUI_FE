@@ -1,6 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import { FaBook, FaUniversity, FaInfoCircle, FaEnvelope, FaSignInAlt } from 'react-icons/fa';
+import {
+  FaBook,
+  FaUniversity,
+  FaInfoCircle,
+  FaEnvelope,
+  FaSignInAlt,
+  FaShoppingCart,
+  FaBox,
+  FaStore
+} from 'react-icons/fa';
 import { FaFacebookF, FaYoutube, FaGoogle } from 'react-icons/fa';
 import { AiOutlineAppstore } from 'react-icons/ai';
 import { IoLibrary } from 'react-icons/io5';
@@ -23,6 +32,9 @@ import {FiArrowDown, FiArrowUp} from "react-icons/fi";
 import useAxiosSupport from "../hooks/useAxiosSupport";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
+import CollectionSection from "../components/CollectionSection";
+import CategorySection from "../components/CategorySection";
+import FeatureProductSection from "../components/FeatureProductSection";
 export default function HomePage() {
   const axiosSupport = useAxiosSupport();
 
@@ -113,7 +125,6 @@ export default function HomePage() {
                 className="w-full bg-[#0b328f] text-white py-1.5 sm:py-2 rounded text-xs sm:text-sm md:text-base hover:bg-[#092569] transition-colors"
                 onClick={(e) => {
                   e.stopPropagation();
-                  // Xử lý logic thêm vào giỏ hàng ở đây
                   console.log('Thêm vào giỏ hàng:', item.name);
                 }}
             >
@@ -137,354 +148,211 @@ export default function HomePage() {
       <div className="flex flex-col min-h-screen bg-gray-100">
         <HomeHeader />
 
-      <main className="flex-grow">
-        <div className="bg-cover bg-center py-16 sm:py-24 md:py-32 relative" id="banner-section"
-             style={{backgroundImage: `url(${backgroundImage})`}}>
-          {/* Overlay tối màu */}
-          <div className="absolute inset-0 bg-black opacity-50"></div>
+        <main className="flex-grow">
+          <div className="bg-cover bg-center py-16 sm:py-24 md:py-32 relative" id="banner-section"
+               style={{backgroundImage: `url(${backgroundImage})`}}>
+            {/* Overlay tối màu */}
+            <div className="absolute inset-0 bg-black opacity-50"></div>
 
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <div className="bg-black bg-opacity-30 p-6 rounded-lg">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 text-white 
+            <div className="container mx-auto px-4 text-center relative z-10">
+              <div className="bg-black bg-opacity-30 p-6 rounded-lg">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 text-white
                      text-shadow-lg">
-                Chào mừng đến với HTQ eCommerce
-              </h1>
-              <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-white font-semibold text-shadow-md 
+                  Chào mừng đến với HTQ eCommerce
+                </h1>
+                <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-white font-semibold text-shadow-md
                     max-w-2xl mx-auto">
-                Khám phá thế giới mua sắm trực tuyến tại HTQ eCommerce. Chúng tôi cung cấp đa dạng
-                sản phẩm chất lượng cao và dịch vụ khách hàng xuất sắc.
-              </p>
-              <div className="max-w-xl mx-auto flex flex-col sm:flex-row">
-                <input type="text" placeholder="Tìm kiếm sản phẩm..."
-                       className="w-full sm:flex-grow px-4 py-2 rounded-lg sm:rounded-r-none 
+                  Khám phá thế giới mua sắm trực tuyến tại HTQ eCommerce. Chúng tôi cung cấp đa dạng
+                  sản phẩm chất lượng cao và dịch vụ khách hàng xuất sắc.
+                </p>
+                <div className="max-w-xl mx-auto flex flex-col sm:flex-row">
+                  <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                         className="w-full sm:flex-grow px-4 py-2 rounded-lg sm:rounded-r-none
                           focus:outline-none focus:ring-2 focus:ring-[#0b328f] mb-2 sm:mb-0"/>
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto bg-[#f2a429] hover:bg-[#e09321] text-white px-6 py-2
+                  <button
+                      type="submit"
+                      className="w-full sm:w-auto bg-[#f2a429] hover:bg-[#e09321] text-white px-6 py-2
                     rounded-lg sm:rounded-l-none transition-colors flex items-center
                     justify-center font-bold whitespace-nowrap"
-                >
-                  <FaSearch className="h-4 w-4 mr-2" />
-                  <span>Tìm kiếm</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="py-12 sm:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">
-              Khám phá Bộ sưu tập của chúng tôi
-            </h2>
-            <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={16}
-                slidesPerView={1}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 24,
-                  },
-                  1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 24,
-                  },
-                }}
-                navigation
-                pagination={{ clickable: true }}
-                className="mb-8"
-            >
-              {renderCollectionCards(products)}
-            </Swiper>
-            {showMore && (
-                <>
-                  <Swiper
-                      modules={[Navigation, Pagination]}
-                      spaceBetween={16}
-                      slidesPerView={1}
-                      breakpoints={{
-                        640: {
-                          slidesPerView: 2,
-                          spaceBetween: 20,
-                        },
-                        768: {
-                          slidesPerView: 3,
-                          spaceBetween: 24,
-                        },
-                        1024: {
-                          slidesPerView: 4,
-                          spaceBetween: 24,
-                        },
-                      }}
-                      navigation
-                      pagination={{ clickable: true }}
-                      className="mb-8"
                   >
-                    {renderCollectionCards(products)}
-                  </Swiper>
-                  <Swiper
-                      modules={[Navigation, Pagination]}
-                      spaceBetween={16}
-                      slidesPerView={1}
-                      breakpoints={{
-                        640: {
-                          slidesPerView: 2,
-                          spaceBetween: 20,
-                        },
-                        768: {
-                          slidesPerView: 3,
-                          spaceBetween: 24,
-                        },
-                        1024: {
-                          slidesPerView: 4,
-                          spaceBetween: 24,
-                        },
-                      }}
-                      navigation
-                      pagination={{ clickable: true }}
-                      className="mb-8"
-                  >
-                    {renderCollectionCards(products)}
-                  </Swiper>
-                  <Swiper
-                      modules={[Navigation, Pagination]}
-                      spaceBetween={16}
-                      slidesPerView={1}
-                      breakpoints={{
-                        640: {
-                          slidesPerView: 2,
-                          spaceBetween: 20,
-                        },
-                        768: {
-                          slidesPerView: 3,
-                          spaceBetween: 24,
-                        },
-                        1024: {
-                          slidesPerView: 4,
-                          spaceBetween: 24,
-                        },
-                      }}
-                      navigation
-                      pagination={{ clickable: true }}
-                      className="mb-8"
-                  >
-                    {renderCollectionCards(products)}
-                  </Swiper>
-                </>
-            )}
-            <div className="text-center">
-              <button
-                  onClick={() => setShowMore(!showMore)}
-                  className="bg-[#f2a429] text-white py-2 px-4 rounded hover:bg-[#e09321] transition-colors text-sm sm:text-base inline-flex items-center justify-center mx-auto"
-              >
-                {showMore ? <FiArrowUp className="mr-2"/> : <FiArrowDown className="mr-2"/>}
-                <span>{showMore ? 'Thu gọn' : 'Xem thêm'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="py-12 sm:py-16 bg-gray-100">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Dịch vụ Thư viện</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {[
-                {
-                  title: "Mượn và Trả sách",
-                  desc: "Quản lý tài khoản thư viện của bạn",
-                  items: ["Mượn sách trực tuyến", "Gia hạn sách", "Kiểm tra hạn trả", "Đặt trước sách"]
-                },
-                {
-                  title: "Hỗ trợ Nghiên cứu",
-                  desc: "Nhận hỗ trợ từ các chuyên gia",
-                  items: ["Tư vấn nghiên cứu", "Hướng dẫn tìm kiếm tài liệu", "Hỗ trợ trích dẫn", "Hội thảo kỹ năng nghiên cứu"]
-                },
-                {
-                  title: "Không gian Học tập",
-                  desc: "Đặt phòng và không gian học tập",
-                  items: ["Phòng học nhóm", "Khu vực học tập yên tĩnh", "Phòng máy tính", "Không gian sáng tạo"]
-                }
-              ].map((service, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 text-[#0b328f]">{service.title}</h3>
-                  <p className="text-gray-600 mb-4 text-sm sm:text-base">{service.desc}</p>
-                  <ul className="list-disc list-inside space-y-1 sm:space-y-2 text-gray-700 text-sm sm:text-base">
-                    {service.items.map((item, itemIndex) => (
-                      <li key={itemIndex}>{item}</li>
-                    ))}
-                  </ul>
-                  <button className="mt-4 w-full bg-[#f2a429] text-white py-2 rounded hover:bg-[#e09321] transition-colors text-sm sm:text-base">
-                    Tìm hiểu thêm
+                    <FaSearch className="h-4 w-4 mr-2"/>
+                    <span>Tìm kiếm</span>
                   </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="py-12 sm:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Tin tức và Sự kiện</h2>
-            <div className="max-w-3xl mx-auto">
-              <div className="mb-4 flex">
-                <button className="flex-1 bg-[#0b328f] text-white px-4 py-2 rounded-l hover:bg-[#092569] transition-colors text-sm sm:text-base">Tin tức</button>
-                <button className="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-r hover:bg-gray-300 transition-colors text-sm sm:text-base">Sự kiện</button>
-              </div>
-              <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-4 shadow-md">
-                <h3 className="text-lg sm:text-xl font-bold mb-2 text-[#0b328f]">Mở cửa kéo dài trong tuần thi</h3>
-                <p className="text-gray-600 mb-2 text-sm sm:text-base">
-                  <FaClock className="inline-block mr-2 text-[#f2a429]" />
-                  Đăng ngày 1 tháng 5, 2024
-                </p>
-                <p className="text-gray-700 text-sm sm:text-base">Thư viện sẽ mở cửa 24/7 trong tuần thi để hỗ trợ nhu cầu học tập của sinh viên. Chúng tôi cung cấp không gian học tập yên tĩnh, dịch vụ hỗ trợ nghiên cứu, và các tiện ích cần thiết để giúp bạn đạt được kết quả tốt nhất trong kỳ thi.</p>
-              </div>
-              <div className="bg-gray-50 rounded-lg p-4 sm:p-6 shadow-md">
-                <h3 className="text-lg sm:text-xl font-bold mb-2 text-[#0b328f]">Bộ sưu tập mới: Văn học Đương đại Trung Quốc</h3>
-                <p className="text-gray-600 mb-2 text-sm sm:text-base">
-                  <FaClock className="inline-block mr-2 text-[#f2a429]" />
-                  Đăng ngày 15 tháng 4, 2024
-                </p>
-                <p className="text-gray-700 text-sm sm:text-base">Thư viện vừa bổ sung một bộ sưu tập đặc biệt về Văn học Đương đại Trung Quốc. Bộ sưu tập bao gồm hơn 1000 tác phẩm từ các tác giả nổi tiếng và mới nổi, phản ánh sự phong phú và đa dạng của văn học Trung Quốc hiện đại.</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="py-12 sm:py-16 bg-gray-100">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Hướng dẫn Nghiên cứu</h2>
-            <div className="max-w-3xl mx-auto">
+          <CategorySection />
+
+
+          <CollectionSection products={products} renderCollectionCards={renderCollectionCards} />
+
+          <FeatureProductSection/>
+          <div className="py-12 sm:py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Khuyến mãi hot</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {[
+                  {
+                    title: "Giảm 20% cho đơn hàng trên 5 triệu",
+                    desc: "Áp dụng cho tất cả sản phẩm. Thời gian: 1/6 - 30/6"
+                  },
+                  {title: "Mua 1 tặng 1 phụ kiện", desc: "Khi mua smartphone. Thời gian: Đến hết tháng 6"},
+                  {title: "Trả góp 0%", desc: "Áp dụng cho laptop và điện thoại cao cấp. Thời gian: Không giới hạn"}
+                ].map((promo, index) => (
+                    <div key={index}
+                         className="bg-gray-50 rounded-lg p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
+                      <h3 className="text-lg sm:text-xl font-bold text-[#0b328f] mb-2">{promo.title}</h3>
+                      <p className="text-sm text-gray-600">{promo.desc}</p>
+                      <button
+                          className="mt-4 bg-[#f2a429] text-white px-4 py-2 rounded hover:bg-[#e09118] transition-colors">
+                        Xem chi tiết
+                      </button>
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="py-12 sm:py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Sản phẩm gợi ý hôm
+                nay</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {[
-                {
-                  title: "Cách tìm kiếm tài liệu hiệu quả",
-                  content: (
-                    <>
-                      <p className="text-sm sm:text-base">Để tìm kiếm tài liệu hiệu quả, hãy làm theo các bước sau:</p>
-                      <ol className="list-decimal list-inside mt-2 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                        <li>Xác định từ khóa chính cho chủ đề của bạn</li>
-                        <li>Sử dụng các toán tử Boolean (AND, OR, NOT) để tinh chỉnh tìm kiếm</li>
-                        <li>Tận dụng các bộ lọc như năm xuất bản, loại tài liệu, ngôn  ngữ</li>
-                        <li>Kiểm tra danh sách tham khảo của các bài báo liên quan</li>
-                        <li>Sử dụng các cơ sở dữ liệu chuyên ngành cho lĩnh vực của bạn</li>
-                      </ol>
-                    </>
-                  )
-                },
-                {
-                  title: "Cách trích dẫn nguồn tài liệu",
-                  content: (
-                    <>
-                      <p className="text-sm sm:text-base">Trích dẫn đúng cách là rất quan trọng trong nghiên cứu học thuật. Dưới đây là một số hướng dẫn cơ bản:</p>
-                      <ul className="list-disc list-inside mt-2 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                        <li>Luôn ghi nhận nguồn gốc của thông tin và ý tưởng</li>
-                        <li>Sử dụng phong cách trích dẫn phù hợp với lĩnh vực của bạn (ví dụ: APA, MLA, Chicago)</li>
-                        <li>Đảm bảo thông tin trích dẫn đầy đủ và chính xác</li>
-                        <li>Sử dụng công cụ quản lý trích dẫn để tổ chức và tạo trích dẫn tự động</li>
+                  {
+                    category: "Sách",
+                    products: [
+                      {name: "Đắc Nhân Tâm", author: "Dale Carnegie", image: "path_to_image1.jpg", price: "100.000đ"},
+                      {name: "Nhà Giả Kim", author: "Paulo Coelho", image: "path_to_image2.jpg", price: "120.000đ"},
+                    ]
+                  },
+                  {
+                    category: "Văn phòng phẩm",
+                    products: [
+                      {name: "Bút bi cao cấp", brand: "Parker", image: "path_to_image3.jpg", price: "50.000đ"},
+                      {name: "Sổ tay bìa da", brand: "Moleskine", image: "path_to_image4.jpg", price: "80.000đ"},
+                    ]
+                  },
+                  {
+                    category: "Thiết bị điện tử",
+                    products: [
+                      {name: "Tai nghe không dây", brand: "Sony", image: "path_to_image5.jpg", price: "1.500.000đ"},
+                      {name: "Bàn phím cơ", brand: "Logitech", image: "path_to_image6.jpg", price: "2.000.000đ"},
+                    ]
+                  }
+                ].map((category, index) => (
+                    <div key={index} className="bg-gray-50 rounded-lg p-4 sm:p-6 shadow-md">
+                      <h3 className="text-lg sm:text-xl font-bold text-[#0b328f] mb-4">{category.category}</h3>
+                      <div className="space-y-4">
+                        {category.products.map((product, productIndex) => (
+                            <div key={productIndex}
+                                 className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                              <img src={product.image} alt={product.name}
+                                   className="w-full h-48 object-cover rounded-md mb-4"/>
+                              <h4 className="text-md font-semibold text-[#0b328f]">{product.name}</h4>
+                              <p className="text-sm text-gray-600">{product.author || product.brand}</p>
+                              <p className="text-[#f2a429] font-bold mt-2">{product.price}</p>
+                            </div>
+                        ))}
+                      </div>
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="py-12 sm:py-16 bg-gray-100">
+            <div className="container mx-auto px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Dịch vụ Nổi
+                bật</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                {[
+                  {
+                    title: "Giao hàng nhanh chóng",
+                    desc: "Nhận hàng trong vòng 24h",
+                    items: ["Miễn phí vận chuyển", "Theo dõi đơn hàng", "Đổi trả dễ dàng", "Hỗ trợ 24/7"]
+                  },
+                  {
+                    title: "Thanh toán an toàn",
+                    desc: "Đa dạng phương thức thanh toán",
+                    items: ["Thẻ tín dụng/ghi nợ", "Ví điện tử", "Thanh toán khi nhận hàng", "Chuyển khoản ngân hàng"]
+                  },
+                  {
+                    title: "Khuyến mãi hấp dẫn",
+                    desc: "Tiết kiệm hơn khi mua sắm",
+                    items: ["Giảm giá theo mùa", "Ưu đãi thành viên", "Tích điểm đổi quà", "Flash sale hàng tuần"]
+                  }
+                ].map((service, index) => (
+                    <div key={index}
+                         className="bg-white rounded-lg p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
+                      <h3 className="text-lg sm:text-xl font-bold mb-2 text-[#0b328f]">{service.title}</h3>
+                      <p className="text-gray-600 mb-4 text-sm sm:text-base">{service.desc}</p>
+                      <ul className="list-disc list-inside space-y-1 sm:space-y-2 text-gray-700 text-sm sm:text-base">
+                        {service.items.map((item, itemIndex) => (
+                            <li key={itemIndex}>{item}</li>
+                        ))}
                       </ul>
-                      <p className="mt-2 text-sm sm:text-base">Thư viện cung cấp hướng dẫn chi tiết và hội thảo về cách trích dẫn. Hãy liên hệ với chúng tôi để biết thêm thông tin.</p>
-                    </>
-                  )
-                },
-                {
-                  title: "Sử dụng cơ sở dữ liệu chuyên ngành",
-                  content: (
-                    <>
-                      <p className="text-sm sm:text-base">Cơ sở dữ liệu chuyên ngành cung cấp truy cập vào các tài liệu học thuật chất lượng cao. Dưới đây là một số mẹo để sử dụng hiệu quả:</p>
-                      <ul className="list-disc list-inside mt-2 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                        <li>Xác định cơ sở dữ liệu phù hợp nhất cho lĩnh vực của bạn</li>
-                        <li>Tìm hiểu về các tính năng tìm kiếm nâng cao của từng cơ sở dữ liệu</li>
-                        <li>Sử dụng bộ lọc để thu hẹp kết quả tìm kiếm</li>
-                        <li>Lưu các tìm kiếm và thiết lập thông báo cho các bài báo mới</li>
-                        <li>Tận dụng tính năng xuất trích dẫn của cơ sở dữ liệu</li>
-                      </ul>
-                      <p className="mt-2 text-sm sm:text-base">Thư viện cung cấp hướng dẫn sử dụng cho từng cơ sở dữ liệu. Đừng ngần ngại liên hệ với chúng tôi để được hỗ trợ.</p>
-                    </>
-                  )
-                }
-              ].map((item, index) => (
-                <div key={index} className="mb-4">
-                  <button className="flex justify-between items-center w-full bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    <span className="text-base sm:text-lg font-semibold text-[#0b328f]">{item.title}</span>
-                    <FaChevronRight className="h-5 w-5 text-[#f2a429]" />
-                  </button>
-                  <div className="bg-white mt-2 p-4 rounded-lg shadow-md">
-                    {item.content}
-                  </div>
-                </div>
-              ))}
+                      <button
+                          className="mt-4 w-full bg-[#f2a429] text-white py-2 rounded hover:bg-[#e09321] transition-colors text-sm sm:text-base">
+                        Xem chi tiết
+                      </button>
+                    </div>
+                ))}
+              </div>
             </div>
+          </div>
+
+          <div className="py-12 sm:py-16 bg-gray-100">
+            <div className="container mx-auto px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Thống kê Thương
+                mại</h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                {[
+                  {icon: FaShoppingCart, number: "1,000,000+", desc: "Đơn hàng thành công"},
+                  {icon: FaBox, number: "50,000+", desc: "Sản phẩm đang bán"},
+                  {icon: FaUsers, number: "100,000+", desc: "Khách hàng đăng ký"},
+                  {icon: FaStore, number: "1,000+", desc: "Cửa hàng đối tác"}
+                ].map((stat, index) => (
+                    <div key={index}
+                         className="bg-white rounded-lg p-4 sm:p-6 text-center shadow-md hover:shadow-lg transition-shadow">
+                      <stat.icon className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 text-[#f2a429]"/>
+                      <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-[#0b328f]">{stat.number}</h3>
+                      <p className="text-gray-600 text-sm sm:text-base">{stat.desc}</p>
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="py-12 sm:py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Đối tác của Chúng
+                tôi</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8">
+                {[...Array(6)].map((_, index) => (
+                    <img key={index} src={backgroundImage} alt={`Đối tác ${index + 1}`}
+                         className="mx-auto filter grayscale hover:filter-none transition-all duration-300"/>
+                ))}
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Contact div */}
+        <div id="contact" className="py-12 md:py-20">
+          <div className="container mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Đăng kí gia nhập làm người bán hàng</h2>
+            <a href="mailto:library@university.edu"
+               className="bg-[#0b328f] text-white px-4 py-2 md:px-6 md:py-3 rounded-full hover:bg-[#08367b] text-base md:text-lg transition-transform transform hover:scale-105">
+              <FaEnvelope size={20} className="inline mr-2"/> Đăng kí ngay
+            </a>
           </div>
         </div>
 
-        <div className="py-12 sm:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Đội ngũ Thư viện</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {[
-                { name: "Nguyễn Văn A", role: "Giám đốc Thư viện", desc: "Chuyên gia về quản lý thư viện số và phát triển bộ sưu tập" },
-                { name: "Trần Thị B", role: "Trưởng phòng Dịch vụ Độc giả", desc: "Chuyên gia về dịch vụ tham khảo và hỗ trợ nghiên cứu" },
-                { name: "Lê Văn C", role: "Quản lý Công nghệ Thông tin", desc: "Chuyên gia về hệ thống thư viện số và cơ sở dữ liệu" },
-                { name: "Phạm Thị D", role: "Chuyên viên Đào tạo", desc: "Chuyên gia về đào tạo kỹ năng thông tin và hướng dẫn sử dụng thư viện" }
-              ].map((member, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-4 sm:p-6 text-center shadow-md hover:shadow-lg transition-shadow">
-                  <div style={{ backgroundImage: `url(${backgroundImage})` }} alt={member.name} className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-4" />
-                  <h3 className="text-lg sm:text-xl font-bold text-[#0b328f]">{member.name}</h3>
-                  <p className="text-[#f2a429] mb-2 text-sm sm:text-base">{member.role}</p>
-                  <p className="text-gray-600 text-sm">{member.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="py-12 sm:py-16 bg-gray-100">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Thống kê Thư viện</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-              {[
-                { icon: FaBookOpen, number: "1,000,000+", desc: "Sách in và điện tử" },
-                { icon: FaBookmark, number: "50,000+", desc: "Tạp chí và ấn phẩm định kỳ" },
-                { icon: FaUsers, number: "30,000+", desc: "Độc giả đăng ký" },
-                { icon: FaGraduationCap, number: "500+", desc: "Hội thảo và đào tạo mỗi năm" }
-              ].map((stat, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 sm:p-6 text-center shadow-md hover:shadow-lg transition-shadow">
-                  <stat.icon className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 text-[#f2a429]" />
-                  <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-[#0b328f]">{stat.number}</h3>
-                  <p className="text-gray-600 text-sm sm:text-base">{stat.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="py-12 sm:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-[#0b328f]">Đối tác của Chúng tôi</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8" >
-              {[...Array(6)].map((_, index) => (
-                <img key={index} src={backgroundImage} alt={`Đối tác ${index + 1}`} className="mx-auto filter grayscale hover:filter-none transition-all duration-300" />
-              ))}
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Contact div */}
-      <div id="contact" className="py-12 md:py-20">
-        <div className="container mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8">Thông tin liên hệ</h2>
-          <a href="mailto:library@university.edu" className="bg-[#0b328f] text-white px-4 py-2 md:px-6 md:py-3 rounded-full hover:bg-[#08367b] text-base md:text-lg transition-transform transform hover:scale-105">
-            <FaEnvelope size={20} className="inline mr-2" /> Gửi Email
-          </a>
-        </div>
+        {/* Footer */}
+        <HomeFooter/>
       </div>
-
-      {/* Footer */}
-      <HomeFooter />
-    </div>
   );
 }
